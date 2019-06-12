@@ -14,6 +14,10 @@
 		147539D022AE38AB0084B2EE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147539CE22AE38AB0084B2EE /* LaunchScreen.storyboard */; };
 		147539DB22AE38AB0084B2EE /* CelerNetworkProjectTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539DA22AE38AB0084B2EE /* CelerNetworkProjectTests.swift */; };
 		147539E622AE38AB0084B2EE /* CelerNetworkProjectUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539E522AE38AB0084B2EE /* CelerNetworkProjectUITests.swift */; };
+		147539F722AE5BCA0084B2EE /* APINetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539F622AE5BCA0084B2EE /* APINetwork.swift */; };
+		147539F922AE5E980084B2EE /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539F822AE5E980084B2EE /* Graphics.swift */; };
+		14A35BE122B0D3F1008965B5 /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A35BE022B0D3F1008965B5 /* VideoCollectionViewCell.swift */; };
+		14A35BE322B0DF36008965B5 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A35BE222B0DF36008965B5 /* AVPlayer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,10 @@
 		147539E122AE38AB0084B2EE /* CelerNetworkProjectUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CelerNetworkProjectUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		147539E522AE38AB0084B2EE /* CelerNetworkProjectUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelerNetworkProjectUITests.swift; sourceTree = "<group>"; };
 		147539E722AE38AB0084B2EE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		147539F622AE5BCA0084B2EE /* APINetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APINetwork.swift; sourceTree = "<group>"; };
+		147539F822AE5E980084B2EE /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
+		14A35BE022B0D3F1008965B5 /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
+		14A35BE222B0DF36008965B5 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,7 +106,10 @@
 			isa = PBXGroup;
 			children = (
 				147539C522AE38A90084B2EE /* AppDelegate.swift */,
-				147539C722AE38A90084B2EE /* ViewController.swift */,
+				14A35BE422B0FEC4008965B5 /* Controllers */,
+				14A35BE622B0FFCB008965B5 /* Model */,
+				14A35BE522B0FFAD008965B5 /* Views */,
+				147539F622AE5BCA0084B2EE /* APINetwork.swift */,
 				147539C922AE38A90084B2EE /* Main.storyboard */,
 				147539CC22AE38AB0084B2EE /* Assets.xcassets */,
 				147539CE22AE38AB0084B2EE /* LaunchScreen.storyboard */,
@@ -123,6 +134,31 @@
 				147539E722AE38AB0084B2EE /* Info.plist */,
 			);
 			path = CelerNetworkProjectUITests;
+			sourceTree = "<group>";
+		};
+		14A35BE422B0FEC4008965B5 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				147539C722AE38A90084B2EE /* ViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		14A35BE522B0FFAD008965B5 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				14A35BE222B0DF36008965B5 /* AVPlayer.swift */,
+				14A35BE022B0D3F1008965B5 /* VideoCollectionViewCell.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		14A35BE622B0FFCB008965B5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				147539F822AE5E980084B2EE /* Graphics.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -258,6 +294,10 @@
 			files = (
 				147539C822AE38A90084B2EE /* ViewController.swift in Sources */,
 				147539C622AE38A90084B2EE /* AppDelegate.swift in Sources */,
+				147539F922AE5E980084B2EE /* Graphics.swift in Sources */,
+				14A35BE122B0D3F1008965B5 /* VideoCollectionViewCell.swift in Sources */,
+				147539F722AE5BCA0084B2EE /* APINetwork.swift in Sources */,
+				14A35BE322B0DF36008965B5 /* AVPlayer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

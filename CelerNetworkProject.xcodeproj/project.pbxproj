@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1414885E22B2540E009099C5 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 1414885C22B2540E009099C5 /* iCarousel.m */; };
 		147539C622AE38A90084B2EE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539C522AE38A90084B2EE /* AppDelegate.swift */; };
 		147539C822AE38A90084B2EE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539C722AE38A90084B2EE /* ViewController.swift */; };
 		147539CB22AE38A90084B2EE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 147539C922AE38A90084B2EE /* Main.storyboard */; };
@@ -18,6 +19,7 @@
 		147539F922AE5E980084B2EE /* Graphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 147539F822AE5E980084B2EE /* Graphics.swift */; };
 		14A35BE122B0D3F1008965B5 /* VideoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A35BE022B0D3F1008965B5 /* VideoCollectionViewCell.swift */; };
 		14A35BE322B0DF36008965B5 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A35BE222B0DF36008965B5 /* AVPlayer.swift */; };
+		14A35BEB22B1F5CB008965B5 /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14A35BEA22B1F5CB008965B5 /* ImageCache.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +40,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1414885B22B2540C009099C5 /* CelerNetworkProject-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "CelerNetworkProject-Bridging-Header.h"; sourceTree = "<group>"; };
+		1414885C22B2540E009099C5 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iCarousel.m; sourceTree = "<group>"; };
+		1414885D22B2540E009099C5 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iCarousel.h; sourceTree = "<group>"; };
 		147539C222AE38A90084B2EE /* CelerNetworkProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CelerNetworkProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		147539C522AE38A90084B2EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		147539C722AE38A90084B2EE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -55,6 +60,7 @@
 		147539F822AE5E980084B2EE /* Graphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Graphics.swift; sourceTree = "<group>"; };
 		14A35BE022B0D3F1008965B5 /* VideoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCollectionViewCell.swift; sourceTree = "<group>"; };
 		14A35BE222B0DF36008965B5 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
+		14A35BEA22B1F5CB008965B5 /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,14 +112,18 @@
 			isa = PBXGroup;
 			children = (
 				147539C522AE38A90084B2EE /* AppDelegate.swift */,
+				14A35BE922B1F5A0008965B5 /* New Group */,
 				14A35BE422B0FEC4008965B5 /* Controllers */,
 				14A35BE622B0FFCB008965B5 /* Model */,
 				14A35BE522B0FFAD008965B5 /* Views */,
 				147539F622AE5BCA0084B2EE /* APINetwork.swift */,
 				147539C922AE38A90084B2EE /* Main.storyboard */,
+				1414885D22B2540E009099C5 /* iCarousel.h */,
+				1414885C22B2540E009099C5 /* iCarousel.m */,
 				147539CC22AE38AB0084B2EE /* Assets.xcassets */,
 				147539CE22AE38AB0084B2EE /* LaunchScreen.storyboard */,
 				147539D122AE38AB0084B2EE /* Info.plist */,
+				1414885B22B2540C009099C5 /* CelerNetworkProject-Bridging-Header.h */,
 			);
 			path = CelerNetworkProject;
 			sourceTree = "<group>";
@@ -159,6 +169,14 @@
 				147539F822AE5E980084B2EE /* Graphics.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		14A35BE922B1F5A0008965B5 /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				14A35BEA22B1F5CB008965B5 /* ImageCache.swift */,
+			);
+			path = "New Group";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -229,6 +247,7 @@
 				TargetAttributes = {
 					147539C122AE38A90084B2EE = {
 						CreatedOnToolsVersion = 10.2;
+						LastSwiftMigration = 1020;
 					};
 					147539D522AE38AB0084B2EE = {
 						CreatedOnToolsVersion = 10.2;
@@ -294,6 +313,8 @@
 			files = (
 				147539C822AE38A90084B2EE /* ViewController.swift in Sources */,
 				147539C622AE38A90084B2EE /* AppDelegate.swift in Sources */,
+				14A35BEB22B1F5CB008965B5 /* ImageCache.swift in Sources */,
+				1414885E22B2540E009099C5 /* iCarousel.m in Sources */,
 				147539F922AE5E980084B2EE /* Graphics.swift in Sources */,
 				14A35BE122B0D3F1008965B5 /* VideoCollectionViewCell.swift in Sources */,
 				147539F722AE5BCA0084B2EE /* APINetwork.swift in Sources */,
@@ -472,6 +493,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JATHMZ8R82;
 				INFOPLIST_FILE = CelerNetworkProject/Info.plist;
@@ -481,6 +503,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MaksymVoskresenskyy.CelerNetworkProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CelerNetworkProject/CelerNetworkProject-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -490,6 +514,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JATHMZ8R82;
 				INFOPLIST_FILE = CelerNetworkProject/Info.plist;
@@ -499,6 +524,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.MaksymVoskresenskyy.CelerNetworkProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "CelerNetworkProject/CelerNetworkProject-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

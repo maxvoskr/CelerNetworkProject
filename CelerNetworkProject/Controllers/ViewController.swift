@@ -13,7 +13,9 @@ import AVFoundation
 class ViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var videoCollectionView: UICollectionView!
-    @IBOutlet weak var icarousel: iCarousel!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
+    
+    var isfirstTimeTransform = true
     
     var graphics = [Graphic]()
     
@@ -23,10 +25,8 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         self.videoCollectionView.delegate = self
         self.videoCollectionView.dataSource = self
         
-        self.icarousel.delegate = self
-        self.icarousel.dataSource = self
-        
-        self.icarousel.type = .custom
+        self.imageCollectionView.delegate = self
+        self.imageCollectionView.dataSource = self
         
         APINetwork.shared.pullGraphicsData() { (graphics, error) in
             if let err = error {
@@ -38,7 +38,43 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             
             DispatchQueue.main.async {
                 self.videoCollectionView.reloadData()
-                self.icarousel.reloadData()
+                self.imageCollectionView.reloadData()
+            }
+        }
+    }
+    
+    func adjustCellSizes(indexRow: Int) {
+        var index = indexRow
+        let duration = 0.2
+        var cell: UICollectionViewCell = self.imageCollectionView.cellForItem(at: IndexPath(row: Int(index), section: 0))!
+        
+        if (index == 0) { // If first index
+            UIView.animate(withDuration: duration, delay: 0.0, options: [ .curveEaseOut], animations: {
+                cell.transform = CGAffineTransform.identity
+            }, completion: nil)
+            index += 1
+            cell = self.imageCollectionView.cellForItem(at: IndexPath(row: Int(index), section: 0))!
+            UIView.animate(withDuration: duration, delay: 0.0, options: [ .curveEaseOut], animations: {
+                cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            }, completion: nil)
+        } else {
+            UIView.animate(withDuration: duration, delay: 0.0, options: [ .curveEaseOut], animations: {
+                cell.transform = CGAffineTransform.identity;
+            }, completion: nil)
+            
+            index -= 1 // left
+            if let cell = self.imageCollectionView.cellForItem(at: IndexPath(row: Int(index), section: 0)) {
+                UIView.animate(withDuration: duration, delay: 0.0, options: [ .curveEaseOut], animations: {
+                    cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8);
+                }, completion: nil)
+            }
+            
+            index += 1
+            index += 1 // right
+            if let cell = self.imageCollectionView.cellForItem(at: IndexPath(row: Int(index), section: 0)) {
+                UIView.animate(withDuration: duration, delay: 0.0, options: [ .curveEaseOut], animations: {
+                    cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8);
+                }, completion: nil)
             }
         }
     }
@@ -57,6 +93,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
         } else {
             return 100
         }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        
+        if collectionView == self.videoCollectionView {
+            return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        } else {
+            let cellWidth : CGFloat = 100.0
+            let edgeInsets = (self.view.frame.size.width / 2) - 50
+            return UIEdgeInsets(top: 50, left: edgeInsets, bottom: 0, right: edgeInsets)
+        }
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -80,105 +128,94 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCollectionViewCell
-        
-        let videoURL = URL(string: self.graphics[indexPath.row].videoUrl)
-        let player = AVPlayer(url: videoURL!)
-        let playerLayer = cell.avPlayerView.layer as! AVPlayerLayer
-        playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        playerLayer.frame = CGRect(x: 0, y: 50, width: cell.frame.size.width, height: cell.frame.size.width)
-        playerLayer.player = player
-        player.play()
-        NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
-            player.seek(to: CMTime.zero)
+        if collectionView == self.videoCollectionView {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "videoCell", for: indexPath) as! VideoCollectionViewCell
+            
+            let videoURL = URL(string: self.graphics[indexPath.row].videoUrl)
+            let player = AVPlayer(url: videoURL!)
+            let playerLayer = cell.avPlayerView.layer as! AVPlayerLayer
+            playerLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+            playerLayer.frame = CGRect(x: 0, y: 50, width: cell.frame.size.width, height: cell.frame.size.width)
+            playerLayer.player = player
             player.play()
-        }
-        
-        return cell
-    }
-}
+            NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime, object: player.currentItem, queue: .main) { [weak self] _ in
+                player.seek(to: CMTime.zero)
+                player.play()
+            }
+            return cell
+        } else {
+            let cell = imageCollectionView.dequeueReusableCell(withReuseIdentifier: "imageCell", for: indexPath) as! ImageCollectionViewCell
+            
+            cell.imageView.loadImageUsingCacheWithUrlString(urlString: self.graphics[indexPath.row].imageUrl)
+            
+            if (indexPath.row == 0 && isfirstTimeTransform) {
+                isfirstTimeTransform = false
+            }else{
+                cell.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+            }
 
-extension ViewController: iCarouselDataSource, iCarouselDelegate {
-    func numberOfItems(in carousel: iCarousel) -> Int {
-        print("carousel - \(self.graphics.count)")
-        return self.graphics.count
-    }
-    
-    func carousel(_ carousel: iCarousel, viewForItemAt index: Int, reusing view: UIView?) -> UIView {
-        var itemView: UIImageView
-        itemView = UIImageView()
-        
-        itemView.frame = CGRect(x: 0, y: 600, width: 100, height: 150)
-        /*if (UIScreen.main.bounds.height > 850) {
-         itemView.frame = CGRect(x: 0, y: 700, width: 370, height: 220)
-         //postTimeLabel.frame = CGRect(x: 15, y: 577.5, width: 250, height: 30)
-         //infoImageView.frame = CGRect(x: itemView.bounds.width - 40, y: 580.5, width: 23, height: 23)
-         } else if (UIScreen.main.bounds.height < 700 && UIScreen.main.bounds.width < 400) {
-         itemView.frame = CGRect(x: 0, y: 700, width: 340, height: 260)
-         //postTimeLabel.frame = CGRect(x: 15, y: 420, width: 250, height: 30)
-         //infoImageView.frame = CGRect(x: itemView.bounds.width - 40, y: 423, width: 23, height: 23)
-         } else if (UIScreen.main.bounds.width == 414 && UIScreen.main.bounds.height == 736) {
-         itemView.frame = CGRect(x: 0, y: 700, width: 370, height: 240)
-         //postTimeLabel.frame = CGRect(x: 15, y: 497.5, width: 250, height: 30)
-         //infoImageView.frame = CGRect(x: itemView.bounds.width - 40, y: 500.5, width: 23, height: 23)
-         } else {
-         itemView.frame = CGRect(x: 0, y: 700, width: 340, height: 270) // 540
-         //postTimeLabel.frame = CGRect(x: 15, y: 497.5, width: 250, height: 30)
-         //infoImageView.frame = CGRect(x: itemView.bounds.width - 40, y: 500.5, width: 23, height: 23)
-         }*/
-        
-        //}
-        
-        DispatchQueue.main.async {
-            itemView.loadImageUsingCacheWithUrlString(urlString: self.graphics[index].imageUrl)
+            return cell
         }
-        
-        return itemView
-    }
-    
-    func carousel(_ carousel: iCarousel, valueFor option: iCarouselOption, withDefault value: CGFloat) -> CGFloat {
-        var result : CGFloat
-        switch option {
-        case .spacing:
-            result = 2.0
-        default:
-            result = value
-        }
-        return result
-    }
-    
-    // https://github.com/nicklockwood/iCarousel/issues/404 for the code
-    func carousel(_ carousel: iCarousel, itemTransformForOffset offset: CGFloat, baseTransform transform: CATransform3D) -> CATransform3D {
-        
-        //  Change these two to modify the look of the carousel
-        let centerItemZoom: CGFloat = 1.3//1.1
-        let centerItemSpacing: CGFloat = 0.9 //0.9
-        
-        let spacing: CGFloat = self.carousel(carousel, valueFor: .spacing, withDefault: 1.0)
-        let absClampedOffset = min(1.0, fabs(offset))
-        let clampedOffset = min(1.0, max(-1.0, offset))
-        let scaleFactor = 1.0 + absClampedOffset * (1.0/centerItemZoom - 1.0)
-        let offset = (scaleFactor * offset + scaleFactor * (centerItemSpacing - 1.0) * clampedOffset) * carousel.itemWidth * spacing
-        
-        var transform = CATransform3DTranslate(transform, offset, 0.0, -absClampedOffset)
-        transform = CATransform3DScale(transform, scaleFactor, scaleFactor, 1.0)
-        transform = CATransform3DRotate(transform, .pi / 30 * absClampedOffset, 0, offset, 0)
-        return transform
-    }
-    
-    func carouselDidEndDragging(_ carousel: iCarousel, willDecelerate decelerate: Bool) {
-        let indexPath = IndexPath(row: carousel.currentItemIndex , section: 0)
-        videoCollectionView.scrollToItem(at: indexPath, at: .left, animated: true)
     }
 }
 
 extension ViewController: UIScrollViewDelegate {
-    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        let center = self.view.convert(self.videoCollectionView.center, to: self.videoCollectionView)
-        let index = videoCollectionView!.indexPathForItem(at: center)
-        
-        icarousel.scrollToItem(at: index!.row, animated: true)
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        // Simulate "Page" Function
+        if scrollView.isEqual(videoCollectionView) {
+            let pageWidth: Float = 200
+            let currentOffset: Float = Float(videoCollectionView.contentOffset.x)
+            
+            let targetOffset: Float = Float(targetContentOffset.pointee.x)
+            var newTargetOffset: Float = 0
+            
+            if targetOffset > currentOffset {
+                newTargetOffset = ceilf(currentOffset / pageWidth) * pageWidth
+            } else {
+                newTargetOffset = floorf(currentOffset / pageWidth) * pageWidth
+            }
+            
+            if newTargetOffset < 0 {
+                newTargetOffset = 0
+            } else if (newTargetOffset > Float(scrollView.contentSize.width)) {
+                newTargetOffset = Float(Float(scrollView.contentSize.width))
+            }
+
+            if (Int(newTargetOffset) % Int((2.0 * pageWidth)) == 0) {
+                imageCollectionView.setContentOffset(CGPoint(x: CGFloat(newTargetOffset) / 2, y: scrollView.contentOffset.y), animated: true)
+            } else {
+                newTargetOffset = Float(Int(newTargetOffset) + Int(pageWidth))
+                imageCollectionView.setContentOffset(CGPoint(x: CGFloat(newTargetOffset) / 2, y: scrollView.contentOffset.y), animated: true)
+            }
+            
+            let center = self.view.convert(self.videoCollectionView.center, to: self.videoCollectionView)
+            let index = videoCollectionView!.indexPathForItem(at: center)!.row
+            
+            self.adjustCellSizes(indexRow: index)
+        } else {
+            let pageWidth: Float = 200
+            let currentOffset: Float = Float(scrollView.contentOffset.x)
+            let targetOffset: Float = Float(targetContentOffset.pointee.x)
+            var newTargetOffset: Float = 0
+            
+            if targetOffset > currentOffset {
+                newTargetOffset = ceilf(currentOffset / pageWidth) * pageWidth
+            } else {
+                newTargetOffset = floorf(currentOffset / pageWidth) * pageWidth
+            }
+            
+            if newTargetOffset < 0 {
+                newTargetOffset = 0
+            } else if (newTargetOffset > Float(scrollView.contentSize.width)) {
+                newTargetOffset = Float(Float(scrollView.contentSize.width))
+            }
+            
+            targetContentOffset.pointee.x = CGFloat(currentOffset)
+            scrollView.setContentOffset(CGPoint(x: CGFloat(newTargetOffset), y: scrollView.contentOffset.y), animated: true)
+            
+            let index = newTargetOffset / pageWidth
+            videoCollectionView.scrollToItem(at: IndexPath(row: Int(index), section: 0), at: .right, animated: true)
+            self.adjustCellSizes(indexRow: Int(index))
+        }
     }
 }
-
-
